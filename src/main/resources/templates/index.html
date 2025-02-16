@@ -17,6 +17,7 @@
             <h2>Member Registration</h2>
             <p>Enforces annotation-based constraints defined on the
                 model class.</p>
+            <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
             <div class="form-group">
                 <label for="name" class="control-label">Name:</label>
                 <input type="text" class="form-control" id="name"

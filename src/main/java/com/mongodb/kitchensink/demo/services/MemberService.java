@@ -6,15 +6,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import com.mongodb.kitchensink.demo.models.Member;
 import com.mongodb.kitchensink.demo.repositories.MemberRepository;
+
+import jakarta.validation.Valid;
 
 // import com.example.migration.models.MemberResourceREST;
 // import com.example.migration.repositories.MemberResourceRESTRepository;
 
 @Service
 @Transactional
+@Validated
 public class MemberService {
     @Autowired
     private MemberRepository repository;
@@ -27,7 +31,7 @@ public class MemberService {
         return repository.findById(id);
     }
     
-    public Member save(Member entity) {
+    public Member save(@Valid Member entity) {
         return repository.save(entity);
     }
     

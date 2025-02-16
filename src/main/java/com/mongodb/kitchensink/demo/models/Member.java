@@ -2,12 +2,14 @@ package com.mongodb.kitchensink.demo.models;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -30,6 +32,8 @@ public class Member {
     @NotNull
     @NotEmpty
     @Email
+    @Indexed(unique = true)
+    @NotBlank(message = "Email is mandatory")
     private String email;
 
     @NotNull
