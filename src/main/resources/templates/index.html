@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::title}, ~{::section})}">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Member Registration</title>
+</head>
+<body>
+    <section>
+    <div>
+        <h1>Welcome to Spring Boot!</h1>
+        <div>
+            <p>You have successfully deployed a Jakarta EE Enterprise
+                Application.</p>
+        </div>
+
+        <form id="reg" th:action="@{/members}" method="post" th:object="${member}">
+            <h2>Member Registration</h2>
+            <p>Enforces annotation-based constraints defined on the
+                model class.</p>
+            <div class="form-group">
+                <label for="name" class="control-label">Name:</label>
+                <input type="text" class="form-control" id="name"
+                       th:field="*{name}" placeholder="Enter your name"/>
+                <span class="invalid" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name is mandatory</span>
+            </div>
+            <div class="form-group">
+                <label for="email" class="control-label">Email:</label>
+                <input type="email" class="form-control" id="email"
+                       th:field="*{email}" placeholder="Enter your email"/>
+                <span class="invalid" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email is mandatory</span>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber" class="control-label">Phone #:</label>
+                <input type="tel" class="form-control" id="phoneNumber"
+                       th:field="*{phoneNumber}" placeholder="Enter your phone number"/>
+                <span class="invalid" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number is mandatory</span>
+            </div>
+            <div class="buttons">
+                <button type="submit" class="register">Register</button>
+                <span th:if="${#fields.hasErrors('*')}" class="invalid">Please fix the errors</span>
+            </div>
+            <p></p>
+        </form>
+        
+        <h2>Members</h2>
+        <div>
+            <div th:if="${#lists.isEmpty(members)}">
+                <em>No registered members.</em>
+            </div>
+            <table class="simpletablestyle" th:if="${not #lists.isEmpty(members)}">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone #</th>
+                    <th>REST URL</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="member : ${members}">
+                    <td th:text="${member.id}"></td>
+                    <td th:text="${member.name}"></td>
+                    <td th:text="${member.email}"></td>
+                    <td th:text="${member.phoneNumber}"></td>
+                    <td>
+                        <a th:href="@{/members/{id}(id=${member.id})}">REST URL for member</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5">
+                        REST URL for all members:
+                        <a th:href="@{/members}">/members</a>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    </section>
+</body>
+</html>
